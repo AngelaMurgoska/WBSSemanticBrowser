@@ -1,53 +1,36 @@
 package com.angeladragana.finki.seminant.models;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
+import javax.persistence.*;
+import java.util.Date;
+import java.util.Set;
+
+@Entity
+@Data
+@RequiredArgsConstructor
+@Table(name="query")
 public class Query {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long queryId;
 
+    @Column(unique = true)
     private String name;
-    private boolean publicAccess;
-    private LocalDateTime lastRun;
+
+    @Column
     private String text;
-    private int numResults;
 
-    public Query(){}
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "endpointId", nullable = false)
+    @JsonIgnore
+    private Endpoint endpoint;
 
-    public Query(boolean publicAccess, LocalDateTime lastRun, String text, int numResults) {
-        this.publicAccess = publicAccess;
-        this.lastRun = lastRun;
-        this.text = text;
-        this.numResults = numResults;
-    }
+    @Column
+    private boolean publicAccess;
 
-    public boolean isPublicAccess() {
-        return publicAccess;
-    }
-
-    public void setPublicAccess(boolean publicAccess) {
-        this.publicAccess = publicAccess;
-    }
-
-    public LocalDateTime getLastRun() {
-        return lastRun;
-    }
-
-    public void setLastRun(LocalDateTime lastRun) {
-        this.lastRun = lastRun;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public int getNumResults() {
-        return numResults;
-    }
-
-    public void setNumResults(int numResults) {
-        this.numResults = numResults;
-    }
+    @Column
+    private Date lastRun;
 }
