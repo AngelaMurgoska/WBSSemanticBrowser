@@ -1,4 +1,4 @@
-package com.example.demo.models;
+package com.angeladragana.finki.seminant.models;
 
 import java.time.LocalDateTime;
 

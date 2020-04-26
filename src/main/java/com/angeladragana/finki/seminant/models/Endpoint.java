@@ -1,4 +1,4 @@
-package com.example.demo.models;
+package com.angeladragana.finki.seminant.models;
 
 public class Endpoint {
 
