@@ -20,4 +20,13 @@ public class Result {
     @JsonIgnore
     private Query query;
 
+    @Column
+    private String subject;
+
+    @Column
+    private String predicate;
+
+    @Column
+    private String object;
+
 }
