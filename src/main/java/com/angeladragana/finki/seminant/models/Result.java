@@ -16,8 +16,7 @@ public class Result {
     private long resultId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "queryId", nullable = false)
-    @JsonIgnore
+    @JoinColumn(nullable = false)
     private Query query;
 
     @Column
