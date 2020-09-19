@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import javax.servlet.FilterRegistration;
 
 @SpringBootApplication
-@EnableJpaRepositories
+@EnableJpaRepositories("com.angeladragana.finki.seminant.repository")
 public class WbsSemanticBrowserApplication {
 
     public static void main(String[] args) {
@@ -21,7 +21,8 @@ public class WbsSemanticBrowserApplication {
     public FilterRegistrationBean jwtFilter() {
         final FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
         filterRegistrationBean.setFilter(new JwtFilter());
-        filterRegistrationBean.addUrlPatterns("/api/query/addNew");
+        filterRegistrationBean.addUrlPatterns("/api/query/*");
+        filterRegistrationBean.addUrlPatterns("/api/endpoint/*");
         return filterRegistrationBean;
     }
 }

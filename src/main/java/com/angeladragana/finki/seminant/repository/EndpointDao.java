@@ -1,16 +1,28 @@
 package com.angeladragana.finki.seminant.repository;
 
 import com.angeladragana.finki.seminant.models.Endpoint;
-import com.angeladragana.finki.seminant.models.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import javax.transaction.Transactional;
 
 @Repository
 public interface EndpointDao extends CrudRepository<Endpoint, Long> {
 
-    /** Returns a list of all endpoints.
-    *
-    * @return {@link Iterable<Query>} the list of all queries.
+    /**
+     * Delete the endpoint with the provided endpointId.
+     *
+     * @param endpointId the endpointId by which the
+     *                endpoint is uniquely identified.
+     * @return the endpointId of the deleted endpoint.
      */
-    Iterable<Endpoint> getAll();
+    @Transactional
+    Long deleteByEndpointId(Long endpointId);
+
+    /**
+     * Returns a endpoint.
+     *
+     * @return {@link Endpoint}.
+     */
+    Endpoint getByEndpointId(Long endpointId);
 }

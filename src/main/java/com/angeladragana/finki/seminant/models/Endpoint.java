@@ -1,9 +1,11 @@
 package com.angeladragana.finki.seminant.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
@@ -12,11 +14,15 @@ import javax.persistence.*;
 public class Endpoint {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long endpointId;
+    private Long endpointId;
 
     @Column(unique = true)
     private String name;
 
     @Column
     private String url;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "endpoint", cascade = CascadeType.REMOVE)
+    private Set<Query> queries;
 }

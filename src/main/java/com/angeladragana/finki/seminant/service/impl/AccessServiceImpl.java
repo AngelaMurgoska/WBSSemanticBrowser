@@ -40,7 +40,7 @@ public class AccessServiceImpl implements AccessService {
             user.setPassword(hashed);
             Algorithm algorithm = Algorithm.HMAC256("secret");
             String jwtToken = JWT.create()
-                    .withIssuer("prowork")
+                    .withIssuer("seminant")
                     .withIssuedAt(new Date())
                     .withClaim("username", user.getUsername())
                     .sign(algorithm);
@@ -66,7 +66,7 @@ public class AccessServiceImpl implements AccessService {
             userByUsername.setPassword(hashed);
             Algorithm algorithm = Algorithm.HMAC256("secret");
             String jwtToken = JWT.create()
-                    .withIssuer("prowork")
+                    .withIssuer("seminant")
                     .withIssuedAt(new Date())
                     .withClaim("username", userByUsername.getUsername())
                     .sign(algorithm);
@@ -98,7 +98,7 @@ public class AccessServiceImpl implements AccessService {
             } else {
                 Algorithm algorithm = Algorithm.HMAC256("secret");
                 jwtToken = JWT.create()
-                        .withIssuer("prowork")
+                        .withIssuer("seminant")
                         .withIssuedAt(new Date())
                         .withClaim("username", username)
                         .sign(algorithm);

@@ -1,10 +1,12 @@
 package com.angeladragana.finki.seminant.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Data
@@ -26,4 +28,8 @@ public class User {
 
     @Column
     private String resetToken;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "createdBy")
+    private Set<Query> createdQueries;
 }

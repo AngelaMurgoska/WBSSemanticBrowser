@@ -128,4 +128,59 @@ public final class ApiSwaggerConstants {
      */
     public static final String EXECUTE_QUERY_OPERATION_NOTE = "Execute the specified query to obtain results.";
 
+    /**
+     * The value for getDetailsForQuery in {@link QueryController}
+     */
+    public static final String GET_QUERY_DETAILS_OPERATION_VALUE = "Get details for query.";
+
+    /**
+     * The note for getDetailsForQuery in {@link QueryController}
+     */
+    public static final String GET_QUERY_DETAILS_OPERATION_NOTE = "Get details for query.";
+
+    /**
+     * The description for {@link EndpointController}
+     */
+    public static final String ENDPOINT_API_VALUE = "Seminant Rest Api for Endpoint controller";
+
+    /**
+     * The description for addEndpoint in {@link EndpointController}
+     */
+    public static final String ADD_ENDPOINT_OPERATION_VALUE = "Adds a endpoint.";
+
+    /**
+     * The note for addEndpoint in {@link EndpointController}
+     */
+    public static final String ADD_ENDPOINT_OPERATION_NOTE = "Adds a endpoint.";
+
+    /**
+     * The note for deleteEndpoint in {@link EndpointController}
+     */
+    public static final String DELETE_ENDPOINT_OPERATION_NOTE = "Deletes an endpoint.";
+
+    /**
+     * The description for deleteEndpoint in {@link EndpointController}
+     */
+    public static final String DELETE_ENDPOINT_OPERATION_VALUE = "Deletes an endpoint.";
+
+    /**
+     * The description for getAllEndpoints in {@link EndpointController}
+     */
+    public static final String ALL_ENDPOINTS_OPERATION_VALUE = "Gets all endpoints.";
+
+    /**
+     * The note for getAllEndpoints in {@link EndpointController}
+     */
+    public static final String ALL_ENDPOINTS_OPERATION_NOTE = "Gets all endpoints.";
+
+    /**
+     * The value for getDetailsForEndpoint in {@link EndpointController}
+     */
+    public static final String GET_ENDPOINT_DETAILS_OPERATION_VALUE = "Get details for endpoint.";
+
+    /**
+     * The note for getDetailsForEndpoint in {@link EndpointController}
+     */
+    public static final String GET_ENDPOINT_DETAILS_OPERATION_NOTE = "Get details for endpoint.";
+
 }

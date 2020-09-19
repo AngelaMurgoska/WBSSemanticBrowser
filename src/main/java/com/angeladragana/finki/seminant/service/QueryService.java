@@ -16,7 +16,7 @@ public interface QueryService {
      * @param jwtToken the jwtToken by which the user
      * is uniquely identified.
      *
-     * @return {@link Query} the newly created Comment.
+     * @return {@link Query} the newly created Query.
      */
     Query addQuery(Query query, String jwtToken);
 
@@ -26,7 +26,7 @@ public interface QueryService {
      *
      * @return the queryId of the deleted query.
      */
-    long deleteQuery(long queryId);
+    Long deleteQuery(Long queryId);
 
     /**
      * Returns a list of all queries associated with the user provided
@@ -56,7 +56,7 @@ public interface QueryService {
      *
      * @return the queryId of the executed query.
      */
-    long executeQuery(long queryId);
+    Long executeQuery(Long queryId);
 
 
     /**
@@ -72,4 +72,11 @@ public interface QueryService {
      * @param queryId the id of the query by which the results that need to be selected.
      */
     Iterable<Result> getAllResultsForQuery(Long queryId);
+
+    /**
+     * Returns a query.
+     *
+     * @param queryId the queryId by which the returned query is uniquely identified.
+     */
+    Query getById(Long queryId);
 }

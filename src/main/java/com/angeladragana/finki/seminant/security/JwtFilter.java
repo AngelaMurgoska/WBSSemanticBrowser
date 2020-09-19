@@ -35,7 +35,6 @@ public class JwtFilter extends GenericFilterBean {
         } else {
             String jwtToken = authHeader.substring(7);
             try {
-
                 Algorithm algorithm = Algorithm.HMAC256("secret");
                 JWTVerifier jwtVerifier = JWT.require(algorithm)
                         .withIssuer("seminant")

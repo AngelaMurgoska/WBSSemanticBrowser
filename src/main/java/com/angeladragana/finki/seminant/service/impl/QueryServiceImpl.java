@@ -6,20 +6,14 @@ import com.angeladragana.finki.seminant.models.User;
 import com.angeladragana.finki.seminant.repository.QueryDao;
 import com.angeladragana.finki.seminant.repository.ResultDao;
 import com.angeladragana.finki.seminant.repository.UserDao;
-import com.angeladragana.finki.seminant.service.AccessService;
 import com.angeladragana.finki.seminant.service.QueryService;
 import lombok.RequiredArgsConstructor;
-import org.apache.jena.query.ParameterizedSparqlString;
-import org.apache.jena.query.QueryExecution;
-import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * The implementation of @{@link QueryService}
@@ -28,21 +22,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QueryServiceImpl implements QueryService {
 
-    private final AccessService accessService;
     private final UserDao userDao;
     private final QueryDao queryDao;
     private final ResultDao resultDao;
 
     @Override
-    public Query addQuery(Query query, String jwtToken) {
-        String username = this.accessService.getUsernameFromJwtToken(jwtToken);
+    public Query addQuery(Query query, String username) {
         User user = userDao.findByUsername(username);
         query.setCreatedBy(user);
         return queryDao.save(query);
     }
 
     @Override
-    public long deleteQuery(long queryId) {
+    public Long deleteQuery(Long queryId) {
         return queryDao.deleteByQueryId(queryId);
     }
 
@@ -59,11 +51,11 @@ public class QueryServiceImpl implements QueryService {
 
     @Override
     public Iterable<Query> getAll() {
-        return queryDao.getAll();
+        return queryDao.findAll();
     }
 
     @Override
-    public long executeQuery(long queryId){
+    public Long executeQuery(Long queryId){
         Query query = queryDao.findById(queryId).get();
         query.setLastRun(new Date());
         resultDao.deleteAllByQuery(query);
@@ -72,28 +64,39 @@ public class QueryServiceImpl implements QueryService {
     }
 
     private void updateResultsFor(Query query){
-
         ParameterizedSparqlString qs = new ParameterizedSparqlString(query.getText());
         QueryExecution exec = QueryExecutionFactory.sparqlService(query.getEndpoint().getUrl(), qs.asQuery());
-        Model model = exec.execSelect().getResourceModel();
 
-        StmtIterator stmtIterator = model.listStatements();
+        ResultSet resultSet = exec.execSelect();
 
-        while (stmtIterator.hasNext()) {
+        while(resultSet.hasNext()) {
+            QuerySolution solution = resultSet.next();
             Result result = new Result();
             result.setQuery(query);
-            result.setObject(stmtIterator.nextStatement().getObject().toString());
-            result.setSubject(stmtIterator.nextStatement().getSubject().toString());
-            result.setPredicate(stmtIterator.nextStatement().getPredicate().toString());
+
+            while(solution.varNames().hasNext()) {
+                result.setPredicate(solution.varNames().next());
+                result.setObject(solution.getLiteral(solution.varNames().next()).toString());
+            }
 
             resultDao.save(result);
         }
+
+        //
+//        while (stmtIterator.hasNext()) {
+//            Result result = new Result();
+//            result.setObject(stmtIterator.nextStatement().getObject().toString());
+//            result.setSubject(stmtIterator.nextStatement().getSubject().toString());
+//            result.setPredicate(stmtIterator.nextStatement().getPredicate().toString());
+//            resultDao.save(result);
+//            query.getResults().add(result);
+//        }
     }
 
     @Override
     public Iterable<String> getAllPredicatesForQuery(Long queryId){
         Iterable<Result> results = this.getAllResultsForQuery(queryId);
-        List<String> predicates = new ArrayList<>();
+        Set<String> predicates = new TreeSet<>();
 
         Iterator<Result> resultIterator = results.iterator();
         while (resultIterator.hasNext()) {
@@ -104,8 +107,13 @@ public class QueryServiceImpl implements QueryService {
 
     @Override
     public Iterable<Result> getAllResultsForQuery(Long queryId) {
-        //ToDo: add checking for possible null exceptions here and for all other api calls
+        //ToDo: change this
         Query query = queryDao.findById(queryId).get();
         return resultDao.findAllByQuery(query);
+    }
+
+    @Override
+    public Query getById(Long queryId){
+        return queryDao.getByQueryId(queryId);
     }
 }

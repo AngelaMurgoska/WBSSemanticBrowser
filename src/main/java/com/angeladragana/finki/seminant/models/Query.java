@@ -1,10 +1,12 @@
 package com.angeladragana.finki.seminant.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Data
@@ -13,15 +15,19 @@ import java.util.Date;
 public class Query {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long queryId;
+    private Long queryId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable = false)
+    @ManyToOne
     private Endpoint endpoint;
 
     @JoinColumn(nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     private User createdBy;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "query")
+    private Set<Result> results;
 
     @Column(unique = true)
     private String name;

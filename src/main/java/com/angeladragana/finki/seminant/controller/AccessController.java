@@ -72,7 +72,7 @@ public class AccessController {
             notes= ApiSwaggerConstants.PASSWORD_RESET_SAVE_OPERATION_NOTE,
             response= User.class)
     @PostMapping(value = "/passwordResetSave", produces = "application/json")
-    public User PasswordResetSave(@ModelAttribute User resetUser,
+    public User PasswordResetSave(@RequestBody User resetUser,
                                   @RequestParam String token) throws ServletException, UnsupportedEncodingException {
         return accessService.resetUser(resetUser, token);
     }

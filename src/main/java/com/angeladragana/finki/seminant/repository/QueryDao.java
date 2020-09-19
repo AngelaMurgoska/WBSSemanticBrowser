@@ -18,7 +18,7 @@ public interface QueryDao extends CrudRepository<Query, Long> {
      * @return the queryId of the deleted query.
      */
     @Transactional
-    long deleteByQueryId(long queryId);
+    Long deleteByQueryId(Long queryId);
 
     /**
      * Returns a list of all queries associated with the user provided
@@ -29,17 +29,16 @@ public interface QueryDao extends CrudRepository<Query, Long> {
     Iterable<Query> findAllByCreatedBy(User user);
 
     /**
-     * Returns a list of all queries.
-     *
-     * @return {@link Iterable<Query>} the list of all queries.
-     */
-    Iterable<Query> getAll();
-
-    /**
      * Returns a list of all queries depending if they are publicly visible or not.
      *
      * @return {@link Iterable<Query>} the list of all queries.
      */
     Iterable<Query> findAllByPublicAccess(Boolean publicAccess);
 
+    /**
+     * Returns a query.
+     *
+     * @return {@link Query}.
+     */
+    Query getByQueryId(Long queryId);
 }
