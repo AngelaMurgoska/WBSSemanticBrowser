@@ -71,15 +71,14 @@ public class QueryServiceImpl implements QueryService {
 
         while(resultSet.hasNext()) {
             QuerySolution solution = resultSet.next();
-            Result result = new Result();
-            result.setQuery(query);
 
             while(solution.varNames().hasNext()) {
+                Result result = new Result();
+                result.setQuery(query);
                 result.setPredicate(solution.varNames().next());
                 result.setObject(solution.getLiteral(solution.varNames().next()).toString());
+                resultDao.save(result);
             }
-
-            resultDao.save(result);
         }
 
         //

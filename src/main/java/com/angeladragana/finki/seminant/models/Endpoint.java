@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 @Data
@@ -24,5 +25,5 @@ public class Endpoint {
 
     @JsonIgnore
     @OneToMany(mappedBy = "endpoint", cascade = CascadeType.REMOVE)
-    private Set<Query> queries;
+    private Set<Query> queries = new TreeSet<>();
 }
