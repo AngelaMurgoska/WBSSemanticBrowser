@@ -9,7 +9,9 @@ import com.angeladragana.finki.seminant.repository.UserDao;
 import com.angeladragana.finki.seminant.service.QueryService;
 import lombok.RequiredArgsConstructor;
 import org.apache.jena.query.*;
+import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.springframework.stereotype.Service;
 
@@ -72,11 +74,20 @@ public class QueryServiceImpl implements QueryService {
         while(resultSet.hasNext()) {
             QuerySolution solution = resultSet.next();
 
-            while(solution.varNames().hasNext()) {
+            Iterator<String> varNames = solution.varNames();
+            while(varNames.hasNext()) {
+                String varName = varNames.next();
                 Result result = new Result();
                 result.setQuery(query);
-                result.setPredicate(solution.varNames().next());
-                result.setObject(solution.getLiteral(solution.varNames().next()).toString());
+                result.setPredicate(varName);
+                RDFNode node = solution.get(varName);
+                if (node.isLiteral()) {
+                    result.setObject(solution.getLiteral(varName).toString());
+                    result.setRowNo(resultSet.getRowNumber());
+                } else {
+                    result.setObject(solution.getResource(varName).toString());
+                    result.setRowNo(resultSet.getRowNumber());
+                }
                 resultDao.save(result);
             }
         }

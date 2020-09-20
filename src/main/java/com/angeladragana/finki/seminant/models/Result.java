@@ -19,7 +19,7 @@ public class Result {
     private Query query;
 
     @Column
-    private String subject;
+    private int rowNo;
 
     @Column
     private String predicate;
