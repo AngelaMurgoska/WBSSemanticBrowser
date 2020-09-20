@@ -15,18 +15,25 @@ import java.util.Set;
 public class Query {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long queryId;
+    private Long queryId;
+
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private Endpoint endpoint;
+
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private User createdBy;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "query")
+    private Set<Result> results;
 
     @Column(unique = true)
     private String name;
 
     @Column
     private String text;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "endpointId", nullable = false)
-    @JsonIgnore
-    private Endpoint endpoint;
 
     @Column
     private boolean publicAccess;
