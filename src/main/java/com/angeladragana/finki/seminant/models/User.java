@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 @Data
@@ -31,5 +32,5 @@ public class User {
 
     @JsonIgnore
     @OneToMany(mappedBy = "createdBy")
-    private Set<Query> createdQueries;
+    private Set<Query> createdQueries = new TreeSet<>();
 }
