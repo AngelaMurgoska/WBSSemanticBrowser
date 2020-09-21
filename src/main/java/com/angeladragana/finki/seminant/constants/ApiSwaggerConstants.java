@@ -183,4 +183,9 @@ public final class ApiSwaggerConstants {
      */
     public static final String GET_ENDPOINT_DETAILS_OPERATION_NOTE = "Get details for endpoint.";
 
+    /**
+     * The description for {@link PublicController}
+     */
+    public static final String PUBLIC_API_VALUE = "Seminant REST Api for the Public controller";
+
 }

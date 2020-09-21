@@ -28,7 +28,6 @@ public class QueryController {
     /**
      * Adds new query from a user according to the Query model provided.
      * @param newQuery the new Query model.
-     * @param httpServletRequest used for user access check.
      *
      * @return {@link Query} the newly created Query.
      */
@@ -88,18 +87,6 @@ public class QueryController {
         return queryService.getAll();
     }
 
-    /**
-     * Returns a list of all publicly accessible queries.
-     *
-     * @return {@link Iterable<Query>} the list of all queries.
-     */
-    @ApiOperation(value = ApiSwaggerConstants.ALL_QUERIES_OPERATION_VALUE,
-            notes= ApiSwaggerConstants.ALL_QUERIES_OPERATION_NOTE,
-            response= Iterable.class)
-    @GetMapping(value = "/allPublic", produces = "application/json")
-    public Iterable<Query> getAllPublicQueries() {
-        return queryService.getAllPubliclyAccessible();
-    }
 
     /**
      * Executes a query associated with the provided query id.

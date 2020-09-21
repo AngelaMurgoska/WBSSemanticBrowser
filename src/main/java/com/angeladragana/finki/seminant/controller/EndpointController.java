@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 
 /**
  *  Controller for the endpoint model API requests.
@@ -53,19 +51,6 @@ public class EndpointController {
         return endpointService.deleteEndpoint(endpointId);
     }
 
-    /**
-     * Returns a list of all endpoints associated with the issue that
-     * corresponds to the provided issueId.
-     *
-     * @return {@link Iterable<Endpoint>} the list of all endpoints.
-     */
-    @ApiOperation(value = ApiSwaggerConstants.ALL_ENDPOINTS_OPERATION_VALUE,
-            notes= ApiSwaggerConstants.ALL_ENDPOINTS_OPERATION_NOTE,
-            response= Iterable.class)
-    @GetMapping(value = "/all", produces = "application/json")
-    public Iterable<Endpoint> getAllEndpoints() {
-        return endpointService.getAll();
-    }
 
     /**
      * Returns a endpoint associated with the provided endpoint id.
