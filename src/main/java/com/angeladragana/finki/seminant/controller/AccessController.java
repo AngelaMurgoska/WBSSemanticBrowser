@@ -94,6 +94,7 @@ public class AccessController {
         mailMessage.setTo(email);
         mailMessage.setSubject("Complete Password Reset!");
         mailMessage.setFrom("anagardtasevska@gmail.com");
+        //TODO change url according to front end
         mailMessage.setText("To complete the password reset process, please click here: "
                 + "http://localhost:4200/edit-user?token=" +
                 existingUser.getResetToken());

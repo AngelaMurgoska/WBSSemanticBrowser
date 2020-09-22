@@ -15,6 +15,7 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 /**
@@ -35,8 +36,11 @@ public class QueryServiceImpl implements QueryService {
         return queryDao.save(query);
     }
 
+    @Transactional
     @Override
     public Long deleteQuery(Long queryId) {
+        Query query = queryDao.getByQueryId(queryId);
+        resultDao.deleteAllByQuery(query);
         return queryDao.deleteByQueryId(queryId);
     }
 
@@ -56,6 +60,7 @@ public class QueryServiceImpl implements QueryService {
         return queryDao.findAll();
     }
 
+    @Transactional
     @Override
     public Long executeQuery(Long queryId){
         Query query = queryDao.findById(queryId).get();
