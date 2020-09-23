@@ -8,6 +8,7 @@ import com.angeladragana.finki.seminant.repository.ResultDao;
 import com.angeladragana.finki.seminant.repository.UserDao;
 import com.angeladragana.finki.seminant.service.QueryService;
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.JSONValue;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
@@ -15,6 +16,7 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletException;
 import javax.transaction.Transactional;
 import java.util.*;
 
@@ -130,5 +132,27 @@ public class QueryServiceImpl implements QueryService {
     @Override
     public Query getById(Long queryId){
         return queryDao.getByQueryId(queryId);
+    }
+
+    @Override
+    public Query getDetailsForPublicQuery(Long queryId) {
+        Query publicQuery = getById(queryId);
+        if (publicQuery.isPublicAccess()) {
+            return publicQuery;
+        } else  {
+            //TODO review the return of null
+            return null;
+        }
+    }
+
+    @Override
+    public Long executePublicQuery(Long queryId) {
+        Query publicQuery = getById(queryId);
+        if (publicQuery.isPublicAccess()) {
+           return executeQuery(queryId);
+        } else  {
+            //TODO review the return of null
+            return null;
+        }
     }
 }

@@ -79,4 +79,19 @@ public interface QueryService {
      * @param queryId the queryId by which the returned query is uniquely identified.
      */
     Query getById(Long queryId);
+
+    /**
+     * Returns a public query.
+     *
+     * @param queryId the queryId by which the returned query is uniquely identified.
+     */
+    Query getDetailsForPublicQuery(Long queryId);
+
+    /**
+     * Executes a public query associated with the provided query id.
+     * @param queryId the queryId that uniquely identifies the query.
+     *
+     * @return the queryId of the executed query.
+     */
+    Long executePublicQuery(Long queryId);
 }

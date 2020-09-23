@@ -9,11 +9,7 @@ const SeminantService = {
                 'content-type': 'application/json',
                 'accept': 'application/json'
             }
-        }).then((response) => console.log("Successful Login")).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
-            }
-        });
+        })
     },
 
     registerUser:(email,password,username) => {
@@ -23,11 +19,7 @@ const SeminantService = {
                 'content-type': 'application/json',
                 'accept': 'application/json'
             }
-        }).then((response) => console.log("Successful Register")).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
-            }
-        });
+        })
     },
 
     requestPasswordReset:(email) => {
@@ -39,11 +31,7 @@ const SeminantService = {
             params: {
                 email: email
             }
-        }).then((response) => console.log("Successful Password Reset Request")).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
-            }
-        });
+        })
     },
 
     saveNewUserPassword:(email, password, username, token) => {
@@ -56,22 +44,12 @@ const SeminantService = {
             params: {
                 token: token
             }
-        }).then((response) => console.log("Successful Register")).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
-            }
-        });
+        })
     },
 
     fetchAllEndpoints:() => {
         const url='http://localhost:8080/public/allEndpoints';
-        return axios.get(url).then((response) => {
-            console.log(response.data)
-        }).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
-            }
-        });
+        return axios.get(url)
     },
 
     addEndpoint:(name,endpointUrl, token) => {
@@ -85,11 +63,7 @@ const SeminantService = {
                 'accept': 'application/json',
                 'Authorization': authorization
             }
-        }).then((response) => console.log("Successful Addition")).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
-            }
-        });
+        })
     },
 
     deleteEndpoint:(endpointId, token) => {
@@ -104,11 +78,7 @@ const SeminantService = {
             params: {
                 endpointId: endpointId
             }
-        }).then((response) => console.log("Successful Deletion")).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
-            }
-        });
+        })
     },
 
     fetchEndpointDetails:(endpointId, token) => {
@@ -123,11 +93,7 @@ const SeminantService = {
             params: {
                 endpointId: endpointId
             }
-        }).then((response) => console.log(response.data)).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
-            }
-        });
+        })
     },
 
     fetchAllQueries:(token) => {
@@ -138,22 +104,12 @@ const SeminantService = {
                 'accept': 'application/json',
                 'Authorization': authorization
             }
-        }).then((response) => console.log(response.data)).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
-            }
         })
     },
 
     fetchAllPublicQueries:() => {
         const url='http://localhost:8080/public/allQueries';
-        return axios.get(url).then((response) => {
-            console.log(response.data)
-        }).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
-            }
-        });
+        return axios.get(url)
     },
 
     fetchAllQueriesByUser:(token) => {
@@ -164,13 +120,7 @@ const SeminantService = {
                 'accept': 'application/json',
                 'Authorization': authorization
             }
-        }).then((response) => {
-            console.log(response.data)
-        }).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
-            }
-        });
+        })
     },
 
     addQuery:(token, username, endpointId, name, publicAccess, text) => {
@@ -194,11 +144,7 @@ const SeminantService = {
                 'accept': 'application/json',
                 'Authorization': authorization
             }
-        }).then((response) => console.log(response.data)).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
-            }
-        });
+        })
     },
 
     deleteQuery:(queryId, token) => {
@@ -212,11 +158,19 @@ const SeminantService = {
             params: {
                 queryId: queryId
             }
-        }).then((response) => console.log(response.data)).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
+        })
+    },
+
+    fetchPublicQueryDetails:(queryId) => {
+        const url = "http://localhost:8080/public/details";
+        return axios.post(url, null,{
+            headers: {
+                'accept': 'application/json',
+            },
+            params: {
+                queryId: queryId
             }
-        });
+        })
     },
 
     fetchQueryDetails:(queryId, token) => {
@@ -230,11 +184,19 @@ const SeminantService = {
             params: {
                 queryId: queryId
             }
-        }).then((response) => console.log(response.data)).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
+        })
+    },
+
+    executePublicQuery:(queryId) => {
+        const url = "http://localhost:8080/public/execute";
+        return axios.post(url, null,{
+            headers: {
+                'accept': 'application/json',
+            },
+            params: {
+                queryId: queryId
             }
-        });
+        })
     },
 
     executeQuery:(queryId, token) => {
@@ -248,11 +210,7 @@ const SeminantService = {
             params: {
                 queryId: queryId
             }
-        }).then((response) => console.log(response.data)).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
-            }
-        });
+        })
     },
 
     fetchResultPredicates:(queryId, token) => {
@@ -263,11 +221,7 @@ const SeminantService = {
                 'accept': 'application/json',
                 'Authorization': authorization
             }
-        }).then((response) => console.log(response.data)).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
-            }
-        });
+        })
     },
 
     fetchAllQueryResults:(queryId, token) => {
@@ -278,13 +232,8 @@ const SeminantService = {
                 'accept': 'application/json',
                 'Authorization': authorization
             }
-        }).then((response) => console.log(response.data)).catch((error) => {
-            if (error.response) {
-                console.log(error.response.data)
-            }
-        });
+        })
     }
-
 
 }
 

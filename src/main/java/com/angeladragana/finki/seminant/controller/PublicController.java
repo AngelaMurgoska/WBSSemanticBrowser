@@ -9,10 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *  Controller for the publicly accessable API requests.
@@ -50,4 +47,35 @@ public class PublicController {
     public Iterable<Query> getAllPublicQueries() {
         return queryService.getAllPubliclyAccessible();
     }
+
+
+    /**
+     * Returns query details of a specific publicly accessible query.
+     *
+     * @return {@link Query} details about the query.
+     */
+    @ApiOperation(value = ApiSwaggerConstants.GET_QUERY_DETAILS_OPERATION_VALUE,
+            notes= ApiSwaggerConstants.GET_QUERY_DETAILS_OPERATION_NOTE,
+            response= Query.class)
+    @PostMapping(value = "/details", produces = "application/json")
+    public Query getDetailsForPublicQuery(@RequestParam Long queryId) {
+        return queryService.getDetailsForPublicQuery(queryId);
+    }
+
+
+    /**
+     * Executes a public query associated with the provided query id.
+     * @param queryId the queryId that uniquely identifies the query.
+     *
+     * @return the queryId of the executed query.
+     */
+    @ApiOperation(value = ApiSwaggerConstants.EXECUTE_QUERY_OPERATION_VALUE,
+            notes= ApiSwaggerConstants.EXECUTE_QUERY_OPERATION_NOTE,
+            response= Long.class)
+    @PostMapping(value = "/execute",  produces = "application/json")
+    public Long executePublicQuery(@RequestParam Long queryId) {
+        return queryService.executePublicQuery(queryId);
+    }
+
+
 }
