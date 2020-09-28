@@ -37,7 +37,6 @@ class QueryDetails extends Component{
         });
     }
 
-    //TODO rename this component to PulbicQueryDetails and add another one
     render(){
         return(
             <Card className={"w-100"} >

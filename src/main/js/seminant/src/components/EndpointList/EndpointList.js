@@ -66,7 +66,6 @@ class EndpointList extends Component{
         window.location.reload();
     }
 
-    //TODO set columns to auto where needed
     render() {
         return (
             <Card>

@@ -18,13 +18,14 @@ class ResetPasswordForm extends Component {
         this.setState({[event.target.name] : event.target.value});
     }
 
-    //TODO redirect to homepage
     resetPassword = () => {
         let search = window.location.search;
         let params = new URLSearchParams(search);
         let resetToken = params.get('token')
         SeminantService.saveNewUserPassword(this.state.username, this.state.password, resetToken).then((response) => {
             alert("Your password has been changed, log in to continue");
+        }).catch((error) => {
+            alert("Something went wrong")
         })
     }
 

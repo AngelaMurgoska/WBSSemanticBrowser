@@ -33,7 +33,6 @@ class LogInForm extends Component {
         })
     };
 
-    //TODO form validation
     sendResetPasswordLink  = () => {
         SeminantService.requestPasswordReset(this.state.email).then((response) => {
             alert("An email has been sent to your inbox");

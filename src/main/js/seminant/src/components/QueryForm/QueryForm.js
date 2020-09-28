@@ -27,21 +27,20 @@ const QueryForm = (props)=> {
         }
     }
 
-    //TODO delete controlIds
     return(
         <React.Fragment>
         <Form  onSubmit={(e) => handleSubmit(e)}>
-            <Form.Group controlId="formqueryName">
+            <Form.Group>
                 <Form.Label>Query Name</Form.Label>
                 <br/>
                 <Form.Label>{props.query.name}</Form.Label>
             </Form.Group>
-            <Form.Group controlId="exampleForm.ControlTextarea2">
+            <Form.Group>
                 <Form.Label>Created by</Form.Label>
                 <br/>
                 <Form.Label>{props.user.username}</Form.Label>
             </Form.Group>
-            <Form.Group controlId="exampleForm.ControlTextarea3">
+            <Form.Group>
                 <Form.Label>Endpoint</Form.Label>
                 <br/>
                 <Form.Label>{props.endpoint.name}</Form.Label>
@@ -53,7 +52,7 @@ const QueryForm = (props)=> {
                     <Form.Label>{props.query.lastRun}</Form.Label>
                 </Form.Group>
             }
-            <Form.Group controlId="exampleForm.ControlTextarea1">
+            <Form.Group>
             <Form.Label>Query Text</Form.Label>
             <Form.Control as="textarea" rows="10" value = {props.query.text}/>
             </Form.Group>
