@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import SeminantService from "../../service/axiosSeminantService";
 import {Card} from "react-bootstrap";
-import QueryPage from "../../views/QueryPage/QueryPage";
 import QueryForm from "../QueryForm/QueryForm";
+import UserInfoService from "../../service/userInfoService";
 
 class QueryDetails extends Component{
 
@@ -24,17 +24,26 @@ class QueryDetails extends Component{
                 endpoint: response.data.endpoint,
             });
         }).catch((error) => {
-            console.log(error.response)
+            const authorization = UserInfoService.getLoggedInUserAuthorizationToken();
+            SeminantService.fetchQueryDetails(queryId, authorization).then((response) => {
+                this.setState( {
+                    query:response.data,
+                    user: response.data.createdBy,
+                    endpoint: response.data.endpoint,
+                });
+            }).catch((error) => {
+                console.log(error.response)
+            });
         });
     }
 
+    //TODO rename this component to PulbicQueryDetails and add another one
     render(){
         return(
             <Card className={"w-100"} >
                 <Card.Body>
                     <Card.Text>
                         <Card.Title>Query Details</Card.Title>
-                        <Card.Title>{console.log(this.state.query)}</Card.Title>
                         <QueryForm query = {this.state.query} user = {this.state.user} endpoint = {this.state.endpoint}/>
                     </Card.Text>
                 </Card.Body>

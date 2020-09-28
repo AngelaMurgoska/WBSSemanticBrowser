@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const SeminantService = {
 
-    loginUser:(email,password,username) => {
+    loginUser:(username, password) => {
         const url = 'http://localhost:8080/api/access/login';
-        return axios.post(url, { email: email, password: password, username: username }, {
+        return axios.post(url, {password: password, username: username}, {
             headers: {
                 'content-type': 'application/json',
                 'accept': 'application/json'
@@ -12,9 +12,9 @@ const SeminantService = {
         })
     },
 
-    registerUser:(email,password,username) => {
+    registerUser:(email, username, password) => {
         const url = 'http://localhost:8080/api/access/register';
-        return axios.post(url, { email: email, password: password, username: username }, {
+        return axios.post(url, { email: email, username: username, password: password}, {
             headers: {
                 'content-type': 'application/json',
                 'accept': 'application/json'
@@ -34,9 +34,9 @@ const SeminantService = {
         })
     },
 
-    saveNewUserPassword:(email, password, username, token) => {
-        const url = 'http://localhost:8080/api/access/passwordResetSaver';
-        return axios.post(url, { email: email, password: password, username: username }, {
+    saveNewUserPassword:(username, password, token) => {
+        const url = 'http://localhost:8080/api/access/passwordResetSave';
+        return axios.post(url, {username: username, password: password}, {
             headers: {
                 'content-type': 'application/json',
                 'accept': 'application/json'
@@ -52,10 +52,7 @@ const SeminantService = {
         return axios.get(url)
     },
 
-    addEndpoint:(name,endpointUrl, token) => {
-        //const token = sessionStorage.getItem("token");
-        //TODO delete authorization like from every method
-        const authorization = "Bearer " + token;
+    addEndpoint:(name,endpointUrl, authorization) => {
         const url = "http://localhost:8080/api/endpoint/new";
         return axios.post(url, { name: name, url: endpointUrl }, {
             headers: {
@@ -66,9 +63,7 @@ const SeminantService = {
         })
     },
 
-    deleteEndpoint:(endpointId, token) => {
-        //const token = sessionStorage.getItem("token");
-        const authorization = "Bearer " + token;
+    deleteEndpoint:(endpointId, authorization) => {
         const url = "http://localhost:8080/api/endpoint/delete";
         return axios.post(url, null,{
             headers: {
@@ -81,9 +76,7 @@ const SeminantService = {
         })
     },
 
-    fetchEndpointDetails:(endpointId, token) => {
-        //const token = sessionStorage.getItem("token");
-        const authorization = "Bearer " + token;
+    fetchEndpointDetails:(endpointId, authorization) => {
         const url = "http://localhost:8080/api/endpoint/details";
         return axios.post(url, null,{
             headers: {
@@ -96,8 +89,7 @@ const SeminantService = {
         })
     },
 
-    fetchAllQueries:(token) => {
-        const authorization = "Bearer " + token;
+    fetchAllQueries:(authorization) => {
         const url='http://localhost:8080/api/query/all';
         return axios.get(url, {
             headers: {
@@ -112,9 +104,8 @@ const SeminantService = {
         return axios.get(url)
     },
 
-    fetchAllQueriesByUser:(token) => {
+    fetchAllQueriesByUser:(authorization) => {
         const url='http://localhost:8080/api/query/allByUser';
-        const authorization = "Bearer " + token;
         return axios.get(url, {
             headers: {
                 'accept': 'application/json',
@@ -123,9 +114,7 @@ const SeminantService = {
         })
     },
 
-    addQuery:(token, username, endpointId, name, publicAccess, text) => {
-        //const token = sessionStorage.getItem("token");
-        const authorization = "Bearer " + token;
+    addQuery:(authorization, username, endpointId, name, publicAccess, text) => {
         const url='http://localhost:8080/api/query/new';
         return axios.post(url,
         {
@@ -147,8 +136,7 @@ const SeminantService = {
         })
     },
 
-    deleteQuery:(queryId, token) => {
-        const authorization = "Bearer " + token;
+    deleteQuery:(queryId, authorization) => {
         const url = "http://localhost:8080/api/query/delete";
         return axios.post(url, null,{
             headers: {
@@ -173,8 +161,7 @@ const SeminantService = {
         })
     },
 
-    fetchQueryDetails:(queryId, token) => {
-        const authorization = "Bearer " + token;
+    fetchQueryDetails:(queryId, authorization) => {
         const url = "http://localhost:8080/api/query/details";
         return axios.post(url, null,{
             headers: {
@@ -199,8 +186,7 @@ const SeminantService = {
         })
     },
 
-    executeQuery:(queryId, token) => {
-        const authorization = "Bearer " + token;
+    executeQuery:(queryId, authorization) => {
         const url = "http://localhost:8080/api/query/execute";
         return axios.post(url, null,{
             headers: {
@@ -213,8 +199,16 @@ const SeminantService = {
         })
     },
 
-    fetchResultPredicates:(queryId, token) => {
-        const authorization = "Bearer " + token;
+    fetchPublicQueryResultPredicates:(queryId) => {
+        const url = "http://localhost:8080/public/allResultPredicates/" + queryId;
+        return axios.get(url, {
+            headers: {
+                'accept': 'application/json',
+            }
+        })
+    },
+
+    fetchQueryResultPredicates:(queryId, authorization) => {
         const url = "http://localhost:8080/api/query/allResultPredicates/" + queryId;
         return axios.get(url, {
             headers: {
@@ -224,8 +218,16 @@ const SeminantService = {
         })
     },
 
-    fetchAllQueryResults:(queryId, token) => {
-        const authorization = "Bearer " + token;
+    fetchAllPublicQueryResults:(queryId) => {
+        const url = "http://localhost:8080/public/allResults/" + queryId;
+        return axios.get(url, {
+            headers: {
+                'accept': 'application/json',
+            }
+        })
+    },
+
+    fetchQueryResults:(queryId, authorization) => {
         const url = "http://localhost:8080/api/query/allResults/" + queryId;
         return axios.get(url, {
             headers: {

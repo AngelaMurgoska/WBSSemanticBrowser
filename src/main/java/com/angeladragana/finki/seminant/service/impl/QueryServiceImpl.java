@@ -8,7 +8,6 @@ import com.angeladragana.finki.seminant.repository.ResultDao;
 import com.angeladragana.finki.seminant.repository.UserDao;
 import com.angeladragana.finki.seminant.service.QueryService;
 import lombok.RequiredArgsConstructor;
-import net.minidev.json.JSONValue;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
@@ -135,24 +134,43 @@ public class QueryServiceImpl implements QueryService {
     }
 
     @Override
-    public Query getDetailsForPublicQuery(Long queryId) {
+    public Query getDetailsForPublicQuery(Long queryId) throws ServletException {
         Query publicQuery = getById(queryId);
         if (publicQuery.isPublicAccess()) {
             return publicQuery;
         } else  {
-            //TODO review the return of null
-            return null;
+            throw new ServletException("Query is not public, cannot get details");
         }
     }
 
+    @Transactional
     @Override
-    public Long executePublicQuery(Long queryId) {
+    public Long executePublicQuery(Long queryId) throws ServletException {
         Query publicQuery = getById(queryId);
         if (publicQuery.isPublicAccess()) {
            return executeQuery(queryId);
         } else  {
-            //TODO review the return of null
-            return null;
+            throw new ServletException("Query is not public, cannot execute");
+        }
+    }
+
+    @Override
+    public Iterable<Result> getAllResultsForPublicQuery(Long queryId) throws ServletException {
+        Query publicQuery = getById(queryId);
+        if (publicQuery.isPublicAccess()) {
+            return getAllResultsForQuery(queryId);
+        } else  {
+            throw new ServletException("Query is not public, cannot get results");
+        }
+    }
+
+    @Override
+    public Iterable<String> getAllPredicatesForPublicQuery(Long queryId) throws ServletException {
+        Query publicQuery = getById(queryId);
+        if (publicQuery.isPublicAccess()) {
+            return getAllPredicatesForQuery(queryId);
+        } else  {
+            throw new ServletException("Query is not public, cannot get predicates");
         }
     }
 }

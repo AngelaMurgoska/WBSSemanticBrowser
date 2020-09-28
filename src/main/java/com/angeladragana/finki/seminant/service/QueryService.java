@@ -4,6 +4,8 @@ import com.angeladragana.finki.seminant.models.Query;
 import com.angeladragana.finki.seminant.models.Result;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletException;
+
 /**
  * Service used to provide the query functionality.
  */
@@ -85,7 +87,7 @@ public interface QueryService {
      *
      * @param queryId the queryId by which the returned query is uniquely identified.
      */
-    Query getDetailsForPublicQuery(Long queryId);
+    Query getDetailsForPublicQuery(Long queryId) throws ServletException;
 
     /**
      * Executes a public query associated with the provided query id.
@@ -93,5 +95,20 @@ public interface QueryService {
      *
      * @return the queryId of the executed query.
      */
-    Long executePublicQuery(Long queryId);
+    Long executePublicQuery(Long queryId) throws ServletException;
+
+    /**
+     * Returns all the current results related to the provided public query.
+     *
+     * @param queryId the id of the query by which the results that need to be selected.
+     */
+    Iterable<Result> getAllResultsForPublicQuery(Long queryId) throws ServletException;
+
+
+    /**
+     * Returns a list of all predicates that are returned from the public query execution.
+     *
+     * @return {@link Iterable<Query>} the list of all queries.
+     */
+    Iterable<String> getAllPredicatesForPublicQuery(Long query) throws ServletException;
 }

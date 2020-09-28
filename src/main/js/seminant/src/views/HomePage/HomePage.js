@@ -4,6 +4,7 @@ import TitleSection from "../../components/TitleSection/TitleSection";
 import SideMenu from "../../components/SideMenu/SideMenu";
 import {Col, Row} from "react-bootstrap";
 import ItemList from "../../components/ItemList/ItemList";
+import Footer from "../../components/Footer/Footer";
 
 class HomePage extends Component {
 
@@ -20,6 +21,7 @@ class HomePage extends Component {
                      <ItemList/>
                  </div>
              </Row>
+             <Footer/>
             </React.Fragment>
         );
     }

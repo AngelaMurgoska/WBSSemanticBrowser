@@ -1,5 +1,5 @@
 
-const userInfoService = {
+const UserInfoService = {
 
     getLoggedInUserUsername:() => {
         const username = sessionStorage.getItem("username");
@@ -10,8 +10,17 @@ const userInfoService = {
         const token = sessionStorage.getItem("token");
         const authToken = "Bearer " + token;
         return authToken;
+    },
+
+    setLoggedInUserCredentials:(username, token) => {
+        sessionStorage.setItem("username", username);
+        sessionStorage.setItem("token", token);
+    },
+
+    checkIfUserLoggedIn:() => {
+        return sessionStorage.getItem("username")
     }
 
 }
 
-export default userInfoService;
+export default UserInfoService;
